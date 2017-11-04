@@ -1,0 +1,23 @@
+in
+pop ax
+push ax
+call fact
+out
+end
+
+fact:
+push ax
+push 1
+sub
+pop ax
+push ax
+push ax
+push 0
+je x==0
+call fact
+mul
+ret
+
+x==0:
+pop bx
+ret
