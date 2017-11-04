@@ -17,6 +17,14 @@
 //set if(0) if you don't need this
 #define ASM_DEBUG
 
+#define cmd(name, num) else if (!strcmp(name, word)) {\
+                        ASM_DEBUG Log_write(num, __LINE__);\
+                        ram[(*c_index)] = num;\
+                        }
+#define jump(name, num) else if (!strcmp(name, word)) {\
+                        ram[(*c_index)] = num;\
+                        }
+
 typedef double data_t;
 
 struct Label {

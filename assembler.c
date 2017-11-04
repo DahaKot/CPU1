@@ -2,9 +2,7 @@
 // Created by dasch on 28.10.2017.
 //
 
-/*комменты и пустые строчки в ассемблер  - с помощью дефайновой генерации
- *
- * дефайновая генерация кода
+/*комменты
  *
  * комменты, вывод котика во время ошибки
  *
@@ -86,6 +84,19 @@ data_t *File_Read(size_t *c_index) {
 
             (*c_index)--;
         }
+        cmd(ADD_s,  ADD)
+        cmd(SUB_s,  SUB)
+        cmd(MUL_s,  MUL)
+        cmd(DIV_s,  DIV)
+        cmd(IDIV_s, IDIV)
+        cmd(OUT_s,  OUT)
+        cmd(IN_s,   IN)
+        cmd(SQRT_s, SQRT)
+        cmd(SIN_s,  SIN)
+        cmd(COS_s,  COS)
+        cmd(RET_s,  RET)
+        cmd(END_s,  END)
+        cmd(MEOW_s, MEOW)
         else if (strcmp(word, PUSH_s) == 0) {
             fscanf(source, "%s", word);
             if (isdigit((int) word[0]) || word[0] == '-') {
@@ -127,50 +138,6 @@ data_t *File_Read(size_t *c_index) {
                 ASM_DEBUG Log_write(INVALID_COMMAND, __LINE__);
                 return (void *) INVALID_COMMAND;
             }
-        }
-        else if (strcmp(word, ADD_s) == 0) {
-            ASM_DEBUG Log_write(ADD, __LINE__);
-            ram[(*c_index)] = ADD;
-        }
-        else if (strcmp(word, SUB_s) == 0) {
-            ASM_DEBUG Log_write(SUB, __LINE__);
-            ram[*c_index] = SUB;
-        }
-        else if (strcmp(word, MUL_s) == 0) {
-            ASM_DEBUG Log_write(MUL, __LINE__);
-            ram[*c_index] = MUL;
-        }
-        else if (strcmp(word, DIV_s) == 0) {
-            ASM_DEBUG Log_write(DIV, __LINE__);
-            ram[*c_index] = DIV;
-        }
-        else if (strcmp(word, MOD_s) == 0) {
-            ASM_DEBUG Log_write(MOD, __LINE__);
-            ram[*c_index] = MOD;
-        }
-        else if (strcmp(word, IDIV_s) == 0) {
-            ASM_DEBUG Log_write(IDIV, __LINE__);
-            ram[*c_index] = IDIV;
-        }
-        else if (strcmp(word, OUT_s) == 0) {
-            ASM_DEBUG Log_write(OUT, __LINE__);
-            ram[*c_index] = OUT;
-        }
-        else if (strcmp(word, IN_s) == 0) {
-            ASM_DEBUG Log_write(IN, __LINE__);
-            ram[*c_index] = IN;
-        }
-        else if (strcmp(word, SQRT_s) == 0) {
-            ASM_DEBUG Log_write(SQRT, __LINE__);
-            ram[*c_index] = SQRT;
-        }
-        else if (strcmp(word, SIN_s) == 0) {
-            ASM_DEBUG Log_write(SIN, __LINE__);
-            ram[*c_index] = SIN;
-        }
-        else if (strcmp(word, COS_s) == 0) {
-            ASM_DEBUG Log_write(COS, __LINE__);
-            ram[*c_index] = COS;
         }
         else if (strcmp(word, LOG_s) == 0) {
             fscanf(source, "%s", word);
@@ -218,23 +185,15 @@ data_t *File_Read(size_t *c_index) {
             if (strcmp(word, JMP_s) == 0) {
                 ram[*c_index] = JMP;
             }
-            else if (strcmp(word, JE_s) == 0) {
-                ram[*c_index] = JE;
-            }
-            else if (strcmp(word, JNE_s) == 0) {
-                ram[*c_index] = JNE;
-            }
-            else if (strcmp(word, JA_s) == 0) {
-                ram[*c_index] = JA;
-            }
-            else if (strcmp(word, JAE_s) == 0) {
-                ram[*c_index] = JAE;
-            }
-            else if (strcmp(word, JB_s) == 0) {
-                ram[*c_index] = JB;
-            }
-            else if (strcmp(word, JBE_s) == 0) {
-                ram[*c_index] = JBE;
+            jump(JE_s, JE)
+            jump(JNE_s, JNE)
+            jump(JA_s, JA)
+            jump(JAE_s, JAE)
+            jump(JB_s, JB)
+            jump(JBE_s, JBE)
+            else {
+                ASM_DEBUG Log_write(INVALID_COMMAND, __LINE__);
+                return (void *) INVALID_COMMAND;
             }
 
             (*c_index)++;
@@ -250,15 +209,6 @@ data_t *File_Read(size_t *c_index) {
 
             ram[*c_index] = no_line;
         }
-        else if (strcmp(word, RET_s) == 0) {
-            ASM_DEBUG Log_write(RET, __LINE__);
-
-            ram[*c_index] = RET;
-        }
-        else if (strcmp(word, END_s) == 0) {
-            ASM_DEBUG Log_write(END, __LINE__);
-            ram[*c_index] = END;
-        }
         else if (word[0] == '\n') {
             ASM_DEBUG Log_write(EMPTY_STRING, __LINE__);
             continue;
@@ -271,8 +221,6 @@ data_t *File_Read(size_t *c_index) {
         (*c_index)++;
     }
 
-//define cmd(name) if (!strcmp (name, word))
-    //cmd ("jmp")
     ram[*c_index] = EOP;
 
     size_t Len = *c_index;

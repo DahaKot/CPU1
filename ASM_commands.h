@@ -32,7 +32,8 @@ enum COMMAND_CODES {
     JB = 24,
     JBE = 25,
     CALL = 26,
-    RET = 27
+    RET = 27,
+    MEOW = 28
 };
 
 static const char *PUSH_s = "push"; //2
@@ -60,5 +61,6 @@ static const char *JB_s = "jb";    //2
 static const char *JBE_s = "jbe";    //2
 static const char *CALL_s = "call";  //2
 static const char *RET_s = "ret";
+static const char *MEOW_s = "meow";
 
 #endif //ASSEMBLER_ASM_COMMANDS_H
